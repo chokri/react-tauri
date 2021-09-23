@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 import {useEffect, useState} from 'react'
+=======
+import { useState } from "react"
+>>>>>>> Send & Receive msg
 import logo from './logo.svg';
 import './App.css';
+// With the Tauri API npm package:
+import { invoke } from '@tauri-apps/api/tauri'
 
+<<<<<<< HEAD
 const App = () => {
   const [title, setTitle] = useState('')
   useEffect(() => {
@@ -14,6 +21,12 @@ const App = () => {
   }, [])
   const clearInput = () => {
     alert('Hello World');
+=======
+const  App = () => {
+  const [command, setCommand] = useState('')
+  const sendCommand = () => {
+    invoke('run_command', {cmd: command}).then(msg => console.log(msg))
+>>>>>>> Send & Receive msg
   }
   return (
     <div className="App">
@@ -23,7 +36,10 @@ const App = () => {
           Hello, this is a {title} app! Folks
         </p>
         <p>
-          <button onClick={clearInput}>Open</button>
+          <input onChange={e => setCommand(e.target.value)} value={command} placeholder="Type something" />
+        </p>
+        <p>
+          <button onClick={sendCommand}>send</button>
         </p>
         <a
           className="App-link"
