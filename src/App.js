@@ -1,9 +1,13 @@
 import {useEffect, useState} from 'react'
 import logo from './logo.svg';
 import './App.css';
+import { invoke } from '@tauri-apps/api/tauri'
 
 const App = () => {
   const [title, setTitle] = useState('')
+  const [command, setCommand] = useState('')
+  const [response, setResponse] = useState('')
+
   useEffect(() => {
     fetch("https://kaliex.co/api")
       .then(res => res.json())
@@ -12,8 +16,10 @@ const App = () => {
         setTitle(result.title)
       })
   }, [])
-  const clearInput = () => {
-    alert('Hello World');
+  const sendCommand = () => {
+    invoke('run_command', {
+      cmd: command
+    }).then(msg => setResponse(msg))
   }
   return (
     <div className="App">
@@ -23,16 +29,14 @@ const App = () => {
           Hello, this is a {title} app! Folks
         </p>
         <p>
-          <button onClick={clearInput}>Open</button>
+          <input onChange={e => setCommand(e.target.value)} value={command} placeholder="Type something" />
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>
+          <button onClick={sendCommand}>send</button>
+        </p>
+        <p>
+          {response && <div><pre>{response}</pre></div>}
+        </p>
       </header>
     </div>
   );
