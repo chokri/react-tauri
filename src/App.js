@@ -1,16 +1,13 @@
-<<<<<<< HEAD
 import {useEffect, useState} from 'react'
-=======
-import { useState } from "react"
->>>>>>> Send & Receive msg
 import logo from './logo.svg';
 import './App.css';
-// With the Tauri API npm package:
 import { invoke } from '@tauri-apps/api/tauri'
 
-<<<<<<< HEAD
 const App = () => {
   const [title, setTitle] = useState('')
+  const [command, setCommand] = useState('')
+  const [response, setResponse] = useState('')
+
   useEffect(() => {
     fetch("https://kaliex.co/api")
       .then(res => res.json())
@@ -19,14 +16,10 @@ const App = () => {
         setTitle(result.title)
       })
   }, [])
-  const clearInput = () => {
-    alert('Hello World');
-=======
-const  App = () => {
-  const [command, setCommand] = useState('')
   const sendCommand = () => {
-    invoke('run_command', {cmd: command}).then(msg => console.log(msg))
->>>>>>> Send & Receive msg
+    invoke('run_command', {
+      cmd: command
+    }).then(msg => setResponse(msg))
   }
   return (
     <div className="App">
@@ -41,14 +34,9 @@ const  App = () => {
         <p>
           <button onClick={sendCommand}>send</button>
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <p>
+          {response && <div><pre>{response}</pre></div>}
+        </p>
       </header>
     </div>
   );
