@@ -5,7 +5,8 @@
 #[tauri::command]
 fn run_command(cmd: String) -> String {
   println!("Msg received {}", cmd);
-  return "Hello from Rust".to_string();
+  // New string with cmd
+  return format!("Message sent: {}", cmd);
 }
 fn main() {
   tauri::Builder::default()
