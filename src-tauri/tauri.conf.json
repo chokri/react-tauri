@@ -54,8 +54,8 @@
     "windows": [
       {
         "title": "Kaliex",
-        "width": 800,
-        "height": 600,
+        "width": 320,
+        "height": 533,
         "resizable": true,
         "fullscreen": false
       }
